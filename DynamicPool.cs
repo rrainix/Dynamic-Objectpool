@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class DynamicPool : MonoBehaviour
 {
-    //The List of dynamic pools
+    //The List of dynamic pools, can be set as private or public.
     public List<Pool> pools = new List<Pool>();
 
      //Singleton in order to acces the functions from this class more easily
@@ -27,6 +27,7 @@ public class DynamicPool : MonoBehaviour
 
         if (poolExists)
         {
+             //Search for an InActiveObject in the pool.
              newObject = GetInActivePoolGameObject(pool);
 
             if(newObject != null)
@@ -36,18 +37,18 @@ public class DynamicPool : MonoBehaviour
 
                 newObject.SetActive(true);
             }
-            else
+            else //Create a new object.
             {
                 newObject = Instantiate(prefab, pos, rotation);
 
                 pool.poolObjects.Add(newObject);
             }
         }
-        else
+        else //Create new pool + new Object within it.
         {
             newObject = Instantiate(prefab, pos, rotation, instance.transform);
 
-            if(pool == null)
+            if(pool == null) //Last check weather the pool is null,
             {
                 instance.pools.Add(new Pool(prefab, newObject));
             }
@@ -56,6 +57,7 @@ public class DynamicPool : MonoBehaviour
         return newObject;
     }
 
+     //These methods are for the main method GetPoolObject().
     public static Pool GetPoolByGameObject(GameObject gameObject) => instance.pools.FirstOrDefault(pool => pool.keyObject == gameObject);
     public static GameObject GetInActivePoolGameObject(Pool pool) => pool.poolObjects.FirstOrDefault(gameObject => !gameObject.activeInHierarchy);
 }
@@ -67,6 +69,7 @@ public class Pool
 
     public List<GameObject> poolObjects = new List<GameObject>();
 
+    //Constructor with a keyobject to acces the pool and a start object.
     public Pool(GameObject keyObject, GameObject newObject)
     {
         this.keyObject = keyObject;
