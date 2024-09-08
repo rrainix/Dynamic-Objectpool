@@ -5,8 +5,10 @@ using UnityEngine;
 
 public class DynamicPool : MonoBehaviour
 {
+    //The List of dynamic pools
     public List<Pool> pools = new List<Pool>();
 
+     //Singleton in order to acces the functions from this class more easily
     internal static DynamicPool instance;
 
     private void Awake()
@@ -14,7 +16,7 @@ public class DynamicPool : MonoBehaviour
         instance = this;
         pools.Clear();
     }
-
+                                           //No World objects, only prefabs.
     public static GameObject GetPoolObject(GameObject prefab, Vector3 pos, Quaternion rotation)
     {
         Pool pool = GetPoolByGameObject(prefab);
