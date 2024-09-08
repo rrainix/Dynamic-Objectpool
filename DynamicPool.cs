@@ -30,7 +30,7 @@ public class DynamicPool : MonoBehaviour
              //Search for an InActiveObject in the pool.
              newObject = GetInActivePoolGameObject(pool);
 
-            if(newObject != null)
+            if(newObject != null && !newObject.activeInHierarchy)
             {
                 newObject.transform.position = pos;
                 newObject.transform.rotation = rotation;
